@@ -54,7 +54,7 @@ public class Product {
 
     public String toString() {
         return "Name: " + this.productName + "\n" +
-                "   Price: " + this.price +"\n" +
+                "   Price: " + this.price +"$\n" +
                 "   Is Exist: " + this.isExist+"\n";
     }
 }

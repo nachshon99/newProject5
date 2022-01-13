@@ -20,50 +20,8 @@ public class Main {
     public static final int END_PURCHASE = -1;
 
     public static void main(String[] args) {
-
-        //System.out.println(nowDate);
-
-
-        /*System.out.println(client);
-        System.out.println(employee);*/
         Shop shop = new Shop();
-
-
-        //למחוק
-        /*Product [] product1= new Product[5];
-        //Cart cart1 = new Cart();
-        User[]users = new User[5];
-        users[0] = new Client("Nachshon", "Kedar", "Nachshon99", "a123b456",true,0,2.1,null,null);
-        users[1] = new Employee("Yossi", "Shitrit", "Yossi10", "a1b2c3d4",true,1,10.5,null,null,"Manager");
-        users[2] = new Client("Daniel", "aaaaa", "Dani10", "a123b456",false,0,11.3,null,null);
-        users[3] = new Client("aaa", "aaa", "aaa", "aaa",true,0,0,cart1,null);
-        users[4] = new Employee("aa", "aa", "aa", "aa",true,0,0,null,null,"Manager");
-
-        Product[] product = new Product[2];
-        product[0] = new Product("Milk", 5.5, 10,true);
-        product[1] = new Product("Bread", 7, 15,true);
-        shop.setProducts(product);
-
-        shop.setUsers(users);*/
-
-        //shop.printProducts();
-
-
-        /*shop.printAllClients();
-        System.out.println("-----");
-        shop.printClubMembers();
-        System.out.println("-----");
-        shop.printClientsMadePurchase();
-        System.out.println("-----");
-        shop.printClientThatSumPurchaseIsHigher();
-        System.out.println("-----");
-        shop.printProductsInStuck();*/
-
-
-        ////למחוק
-
         Scanner scanner = new Scanner(System.in);
-
         User user;
         int option;
         int shopping=0;
@@ -123,13 +81,13 @@ public class Main {
                                     }
                                     case CHANGE_PRODUCT_STATUS: {
                                         int changeStatus;
-                                        if (cart.getProducts().length != 0) {
+                                        if (shop.getProducts().length != 0) {
                                             do {
-                                                shop.printProducts();
+                                                shop.printProducts(shop);
                                                 changeStatus = scanner.nextInt();
                                                 scanner.nextLine();
-                                            } while (changeStatus < MINIMUM_PRODUCTS_INDEX || changeStatus > cart.getProducts().length);
-                                            shop.changeProductStatus(cart.getProducts()[changeStatus]);
+                                            } while (changeStatus < MINIMUM_PRODUCTS_INDEX || changeStatus > shop.getProducts().length);
+                                            shop.changeProductStatus(shop.getProducts()[changeStatus]);
                                             System.out.println("Status change succeeded");
                                         } else {
                                             System.out.println("No products in the list!");
@@ -152,19 +110,13 @@ public class Main {
                         shop.buy(cart,shop,user);
                     }
                     break;
+                    }
+                case EXIT:{
+                    break;
                 }
-            case EXIT:{
-                break;
             }
-        }
-
-
         }while (option != EXIT);
-
-
-
     }
-
 
     private static void printMenu(){
         System.out.println("Press 1 - Create user.");
@@ -180,9 +132,5 @@ public class Main {
         System.out.println("Press 6 - to change product status");
         System.out.println("Press 7 - to make purchase");
         System.out.println("Press 8 - log out");
-
     }
-
-
-
 }

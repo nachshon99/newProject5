@@ -9,9 +9,9 @@ public class Shop {
     public static final int EMPLOYEE_CHOOSE = 1;
     public static final int CLIENT_CHOOSE = 2;
     public static final int ADD_TO_LENGTH_ARRAY = 1;
-    public static final String REGULAR_EMPLOYEE = "Regular Employee";
+    public static final String REGULAR_EMPLOYEE = "Regular employee";
     public static final String MANAGER = "Manager";
-    public static final String MANAGEMENT_TEAM = "Management Team";
+    public static final String MANAGEMENT_TEAM = "Management team";
     public static final int INT_REGULAR_EMPLOYEE = 1;
     public static final int INT_MANAGER = 2;
     public static final int INT_MANAGEMENT_TEAM = 3;
@@ -19,7 +19,7 @@ public class Shop {
     public static final int MANAGEMENT_TEAM_DISCOUNT_PERCENTAGE = 30;
     public static final int MANAGER_DISCOUNT_PERCENTAGE = 20;
     public static final int REGULAR_DISCOUNT_PERCENTAGE = 10;
-    
+
 
     public Shop(){
         this.users = new User[0];
@@ -133,6 +133,9 @@ public class Shop {
             do {
                 System.out.println("(Press -1 to end the purchase)\n");
                 lengthArray = shop.printProductsInStuckAndReturnLengthArray();
+                if(lengthArray == 0){
+                    System.out.println("No products!");
+                }
                 selectProduct = scanner.nextInt();
                 scanner.nextLine();
                 if((selectProduct < Main.MINIMUM_PRODUCTS_INDEX || selectProduct > lengthArray-1) && selectProduct != Main.END_PURCHASE){
@@ -165,7 +168,8 @@ public class Shop {
             System.out.println("End list");
             System.out.println("--------------");
             ((Client)user).getCart().setProducts(cart.getProducts());
-            System.out.println("Current Price:" + cart.sumPrices(user));
+            System.out.println("Current Price:" + cart.sumPrices(user) + "$");
+            System.out.println();
 
         }while (selectProduct != Main.END_PURCHASE);
 
@@ -186,7 +190,7 @@ public class Shop {
                 priceToPay = calculatePercent(priceToPay, REGULAR_DISCOUNT_PERCENTAGE);
             }
         }
-        System.out.println("The price is: " + priceToPay);
+        System.out.println("The price is: " + priceToPay + "$");
         ((Client) user).setCostAllPurchases(((Client) user).getCostAllPurchases() +priceToPay);
     }
 
@@ -325,13 +329,21 @@ public class Shop {
 
     public void addProductToArray(){
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter product name: ");
-        String productName = scanner.nextLine();
-        System.out.println("Enter price: ");
-        double price = scanner.nextDouble();
-        System.out.println("Enter club member discount percentage: ");
-        int discountPercent = scanner.nextInt();
-        scanner.nextLine();
+        String productName;
+        double price;
+        int discountPercent;
+        do {
+            System.out.println("Enter product name: ");
+            productName = scanner.nextLine();
+        }while (productName.length() == 0);
+        do {
+            System.out.println("Enter price: ");
+            price = scanner.nextDouble();
+        }while (price <= 0);
+        do {
+            System.out.println("Enter club member discount percentage: ");
+            discountPercent = scanner.nextInt();
+        }while (discountPercent <1 || discountPercent > 100);
         Product newProduct = new Product(productName,price,discountPercent,true);
         Product[] products= new Product[this.products.length +1];
         for (int i = 0; i < this.products.length; i++){
@@ -341,9 +353,9 @@ public class Shop {
         this.products = products;
     }
 
-    public void printProducts(){
+    public void printProducts(Shop shop){
         System.out.println("Choose product number to change product status: ");
-        for (int i = 0, j = 1; i < products.length;i++){
+        for (int i = 0, j = 1; i < shop.products.length;i++){
             System.out.println("(Press " + i +")" +"\n" +j +") " + this.products[i]);
             j++;
         }

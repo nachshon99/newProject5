@@ -1,22 +1,6 @@
 public class Cart {
     private Product[] products;
 
-    public Cart(){
-        this.products = new Product[0];
-    }
-
-    public Product[] getProducts() {
-        return products;
-    }
-
-    public Cart(Product[] products) {
-        this.products = products;
-    }
-
-    public void setProducts(Product[] products) {
-        this.products = products;
-    }
-
     public Product[] addToCart(Product productToAdd){
         Product[] newProducts = new Product[this.products.length + 1];
         for (int i = 0; i < this.products.length; i++) {
@@ -42,5 +26,21 @@ public class Cart {
             price += productPrice;
         }
         return price;
+    }
+
+    public Cart(){
+        this.products = new Product[0];
+    }
+
+    public Product[] getProducts() {
+        return products;
+    }
+
+    public Cart(Product[] products) {
+        this.products = products;
+    }
+
+    public void setProducts(Product[] products) {
+        this.products = products;
     }
 }
