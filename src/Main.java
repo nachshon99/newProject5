@@ -1,8 +1,4 @@
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.Scanner;
-import java.util.concurrent.ConcurrentSkipListMap;
 
 public class Main {
     public static final int CREATE_ACCOUNT = 1;
@@ -86,7 +82,10 @@ public class Main {
                                                 shop.printProducts(shop);
                                                 changeStatus = scanner.nextInt();
                                                 scanner.nextLine();
-                                            } while (changeStatus < MINIMUM_PRODUCTS_INDEX || changeStatus > shop.getProducts().length);
+                                                if(!shop.getProducts()[changeStatus].isExist()){
+                                                    System.out.println("The item is not in the stuck!");
+                                                }
+                                            } while ((changeStatus < MINIMUM_PRODUCTS_INDEX || changeStatus > shop.printProductsInStuckAndReturnCountProductsIsExist()) && !shop.getProducts()[changeStatus].isExist());
                                             shop.changeProductStatus(shop.getProducts()[changeStatus]);
                                             System.out.println("Status change succeeded");
                                         } else {

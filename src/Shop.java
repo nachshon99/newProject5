@@ -127,24 +127,31 @@ public class Shop {
     public void buy(Cart cart, Shop shop, User user){
         Scanner scanner = new Scanner(System.in);
         int selectProduct;
-        int lengthArray;
+        int countProductsIsExist;
         int countOfThisProduct;
         do {
             do {
                 System.out.println("(Press -1 to end the purchase)\n");
-                lengthArray = shop.printProductsInStuckAndReturnLengthArray();
-                if(lengthArray == 0){
+                countProductsIsExist = shop.printProductsInStuckAndReturnCountProductsIsExist();
+                if(countProductsIsExist == 0){
                     System.out.println("No products!");
                 }
                 selectProduct = scanner.nextInt();
                 scanner.nextLine();
-                if((selectProduct < Main.MINIMUM_PRODUCTS_INDEX || selectProduct > lengthArray-1) && selectProduct != Main.END_PURCHASE){
+                if((selectProduct < Main.MINIMUM_PRODUCTS_INDEX || selectProduct > countProductsIsExist ) && selectProduct != Main.END_PURCHASE){
                     System.out.println("The index not exist!");
                 }
-                if(selectProduct == Main.END_PURCHASE){
+                else if(selectProduct == Main.END_PURCHASE){
                     break;
                 }
-            }while ((selectProduct < Main.MINIMUM_PRODUCTS_INDEX || selectProduct > lengthArray-1));
+                else if(selectProduct > Main.MINIMUM_PRODUCTS_INDEX && selectProduct < countProductsIsExist) {
+                    if (!shop.getProducts()[selectProduct].isExist()) {
+                        System.out.println("The item is not in stuck!");
+                    }
+                }
+
+
+            }while ((selectProduct < Main.MINIMUM_PRODUCTS_INDEX || selectProduct > countProductsIsExist) || !shop.getProducts()[selectProduct].isExist());
             if(selectProduct == Main.END_PURCHASE){
                 System.out.println("The purchase end");
                 break;
@@ -362,7 +369,7 @@ public class Shop {
     }
 
     //לקוח
-    public int printProductsInStuckAndReturnLengthArray(){
+    public int printProductsInStuckAndReturnCountProductsIsExist(){
         int lengthProductsArray = 0;
         if(products.length > 0) {
             for (int i = 0, j = 1; i < products.length; i++) {
