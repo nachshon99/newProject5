@@ -129,8 +129,12 @@ public class Shop {
         int selectProduct;
         int countProductsIsExist;
         int countOfThisProduct;
+        double priceToPay;
+        boolean isNotInStuck = false;
+
         do {
             do {
+                isNotInStuck = false;
                 System.out.println("(Press -1 to end the purchase)\n");
                 countProductsIsExist = shop.printProductsInStuckAndReturnCountProductsIsExist();
                 if(countProductsIsExist == 0){
@@ -144,14 +148,13 @@ public class Shop {
                 else if(selectProduct == Main.END_PURCHASE){
                     break;
                 }
-                else if(selectProduct > Main.MINIMUM_PRODUCTS_INDEX && selectProduct < countProductsIsExist) {
+                else if(selectProduct >= Main.MINIMUM_PRODUCTS_INDEX && selectProduct < countProductsIsExist) {
                     if (!shop.getProducts()[selectProduct].isExist()) {
                         System.out.println("The item is not in stuck!");
+                        isNotInStuck = true;
                     }
                 }
-
-
-            }while ((selectProduct < Main.MINIMUM_PRODUCTS_INDEX || selectProduct > countProductsIsExist) || !shop.getProducts()[selectProduct].isExist());
+            }while ((selectProduct < Main.MINIMUM_PRODUCTS_INDEX || selectProduct > countProductsIsExist) || isNotInStuck);
             if(selectProduct == Main.END_PURCHASE){
                 System.out.println("The purchase end");
                 break;
@@ -180,12 +183,11 @@ public class Shop {
 
         }while (selectProduct != Main.END_PURCHASE);
 
-
         ((Client) user).setPurchases(((Client) user).getPurchases() + 1);
         Calendar calendar = GregorianCalendar.getInstance();
         Date nowDate = Calendar.getInstance().getTime();
         ((Client) user).setLastPurchases(nowDate);
-        double priceToPay = cart.sumPrices(user);
+        priceToPay = cart.sumPrices(user);
         if(user instanceof Employee){
             if(((Employee) user).getRank().equals(Employee.MANAGEMENT_TEAM_RANK)) {
                 priceToPay = calculatePercent(priceToPay,MANAGEMENT_TEAM_DISCOUNT_PERCENTAGE);
@@ -197,8 +199,11 @@ public class Shop {
                 priceToPay = calculatePercent(priceToPay, REGULAR_DISCOUNT_PERCENTAGE);
             }
         }
+
         System.out.println("The price is: " + priceToPay + "$");
         ((Client) user).setCostAllPurchases(((Client) user).getCostAllPurchases() +priceToPay);
+        Product[]newProducts = new Product[0];
+        cart.setProducts(newProducts);
     }
 
     private double calculatePercent(double price, int percent){
@@ -275,7 +280,7 @@ public class Shop {
             if(checkUsername){
                 System.out.println("The username is busy!");
             }
-        }while (checkUsername);
+        }while (checkUsername || username.length() == 0);
         return username;
     }
     private String getPasswordFromUser() {
@@ -382,6 +387,17 @@ public class Shop {
         }
         return lengthProductsArray;
 
+    }
+    public int countProductsIsExistInStuck(){
+        int countProductIsExistIsStuck = 0;
+        if(products.length > 0) {
+            for (int i = 0, j = 1; i < products.length; i++) {
+                if(products[i].isExist()){
+                    countProductIsExistIsStuck++;
+                }
+            }
+        }
+        return countProductIsExistIsStuck;
     }
 
     private User isExistAccount(User[]users, boolean isEmployee){

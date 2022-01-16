@@ -77,15 +77,22 @@ public class Main {
                                     }
                                     case CHANGE_PRODUCT_STATUS: {
                                         int changeStatus;
+                                        boolean isInStuck = false;
                                         if (shop.getProducts().length != 0) {
                                             do {
                                                 shop.printProducts(shop);
                                                 changeStatus = scanner.nextInt();
                                                 scanner.nextLine();
-                                                if(!shop.getProducts()[changeStatus].isExist()){
-                                                    System.out.println("The item is not in the stuck!");
+                                                /*if (changeStatus >= MINIMUM_PRODUCTS_INDEX && changeStatus < shop.getProducts().length) {
+                                                    if (!shop.getProducts()[changeStatus].isExist()) {
+                                                        System.out.println("The item is not in the stuck!");
+                                                        isInStuck = true;
+                                                    }
+                                                }*/
+                                                if (changeStatus < MINIMUM_PRODUCTS_INDEX || changeStatus >= shop.getProducts().length){
+                                                    System.out.println("The index is not exist!");
                                                 }
-                                            } while ((changeStatus < MINIMUM_PRODUCTS_INDEX || changeStatus > shop.printProductsInStuckAndReturnCountProductsIsExist()) && !shop.getProducts()[changeStatus].isExist());
+                                            } while (((changeStatus < MINIMUM_PRODUCTS_INDEX || changeStatus >= shop.getProducts().length)) || isInStuck);
                                             shop.changeProductStatus(shop.getProducts()[changeStatus]);
                                             System.out.println("Status change succeeded");
                                         } else {
@@ -132,4 +139,5 @@ public class Main {
         System.out.println("Press 7 - to make purchase");
         System.out.println("Press 8 - log out");
     }
+
 }
