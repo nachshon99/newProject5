@@ -7,22 +7,21 @@ public class Client extends User{
     private Date lastPurchases;
     private Cart cart;
 
-    public boolean isClubMember() {
-        return isClubMember;
-    }
-
-    public void setClubMember(boolean clubMember) {
-        isClubMember = clubMember;
-    }
-
-    public Client(String firstName, String lastName, String username, String password, boolean isClubMember, int purchases, double costAllPurchases, Cart cart , Date lastPurchases ) {
+    public Client(String firstName, String lastName, String username, String password, boolean isClubMember, int purchases, double costAllPurchases, Date lastPurchases ) {
         super(firstName, lastName, username, password);
         this.isClubMember = isClubMember;
         this.purchases = purchases;
         this.costAllPurchases = costAllPurchases;
         this.lastPurchases = lastPurchases;
         this.cart = new Cart();
+    }
 
+    public boolean isClubMember() {
+        return isClubMember;
+    }
+
+    public void setClubMember(boolean clubMember) {
+        isClubMember = clubMember;
     }
 
     public Cart getCart() {

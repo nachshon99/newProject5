@@ -20,7 +20,6 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         User user;
         int option;
-        int shopping=0;
         do {
             do {
                 printMenu();
@@ -83,12 +82,6 @@ public class Main {
                                                 shop.printProducts(shop);
                                                 changeStatus = scanner.nextInt();
                                                 scanner.nextLine();
-                                                /*if (changeStatus >= MINIMUM_PRODUCTS_INDEX && changeStatus < shop.getProducts().length) {
-                                                    if (!shop.getProducts()[changeStatus].isExist()) {
-                                                        System.out.println("The item is not in the stuck!");
-                                                        isInStuck = true;
-                                                    }
-                                                }*/
                                                 if (changeStatus < MINIMUM_PRODUCTS_INDEX || changeStatus >= shop.getProducts().length){
                                                     System.out.println("The index is not exist!");
                                                 }

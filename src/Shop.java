@@ -214,17 +214,15 @@ public class Shop {
     public User login(){
         Scanner scanner = new Scanner(System.in);
         User user = null;
-
         int choose;
         do {
-            System.out.println("Choose type account: (1 - Employee , 2 - Client)");
+            System.out.println("Choose type account: (Press 1 - Employee , 2 - Client)");
             choose = scanner.nextInt();
-            scanner.nextLine();
+            scanner.nextLine();//הערה לשי - השורה הזאת צורפה בכמה מקומות בגלל שהבנו מתלמיד שנה ב שיש תקלה בתוכנה אחרי נקסט אינט שזה מדלג על הקליטה בפעם הראשונה
             if(choose < EMPLOYEE_CHOOSE || choose > CLIENT_CHOOSE){
                 System.out.println("The option you choose is invalid");
             }
         }while (choose < EMPLOYEE_CHOOSE || choose > CLIENT_CHOOSE);
-
 
         switch (choose){
             case EMPLOYEE_CHOOSE:{
@@ -388,17 +386,6 @@ public class Shop {
         return lengthProductsArray;
 
     }
-    public int countProductsIsExistInStuck(){
-        int countProductIsExistIsStuck = 0;
-        if(products.length > 0) {
-            for (int i = 0, j = 1; i < products.length; i++) {
-                if(products[i].isExist()){
-                    countProductIsExistIsStuck++;
-                }
-            }
-        }
-        return countProductIsExistIsStuck;
-    }
 
     private User isExistAccount(User[]users, boolean isEmployee){
         User user = null;
@@ -430,7 +417,7 @@ public class Shop {
         for (int i = 0; i < this.users.length;i++){
             newArray[i] = this.users[i];
         }
-        User userToAdd = new Client(firstName,lastName,username,password, isClubMember,0,0.0,null,null);
+        User userToAdd = new Client(firstName,lastName,username,password, isClubMember,0,0.0,null);
         newArray[this.users.length] = userToAdd;
         this.users = newArray;
     }
@@ -440,7 +427,7 @@ public class Shop {
         for (int i = 0; i < this.users.length;i++){
             newArray[i] = this.users[i];
         }
-        User userToAdd = new Employee(firstName,lastName,username,password,false,0,0.0,null,null, rank);
+        User userToAdd = new Employee(firstName,lastName,username,password,false,0,0.0,null, rank);
         newArray[this.users.length] = userToAdd;
         this.users = newArray;
     }

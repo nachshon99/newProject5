@@ -8,10 +8,9 @@ public class Employee extends Client {
     public static final String MANAGER_RANK = "Manager";
     public static final String MANAGEMENT_TEAM_RANK = "Management team";
 
-    public Employee(String firstName, String lastName, String username, String password, boolean isClubMember, int purchases, double costAllPurchases, Date lastPurchases,Cart cart, String rank){
-        super(firstName, lastName, username,password,isClubMember,purchases,costAllPurchases, cart, lastPurchases);
+    public Employee(String firstName, String lastName, String username, String password, boolean isClubMember, int purchases, double costAllPurchases, Date lastPurchases, String rank){
+        super(firstName, lastName, username,password,isClubMember,purchases,costAllPurchases, lastPurchases);
         this.rank = rank;
-
     }
 
     public String getRank() {
