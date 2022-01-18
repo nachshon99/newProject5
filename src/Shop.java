@@ -188,13 +188,13 @@ public class Shop {
         ((Client) user).setLastPurchases(nowDate);
         priceToPay = cart.sumPrices(user);
         if(user instanceof Employee){
-            if(((Employee) user).getRank().equals(Employee.MANAGEMENT_TEAM_RANK)) {
+            if(((Employee) user).getRank().equals(MANAGEMENT_TEAM)) {
                 priceToPay = calculatePercent(priceToPay,MANAGEMENT_TEAM_DISCOUNT_PERCENTAGE);
             }
-            else if(((Employee) user).getRank().equals(Employee.MANAGER_RANK)) {
+            else if(((Employee) user).getRank().equals(MANAGER)) {
                 priceToPay = calculatePercent(priceToPay, MANAGER_DISCOUNT_PERCENTAGE);
             }
-            else if(((Employee) user).getRank().equals(Employee.REGULAR_RANK)) {
+            else if(((Employee) user).getRank().equals(REGULAR_EMPLOYEE)) {
                 priceToPay = calculatePercent(priceToPay, REGULAR_DISCOUNT_PERCENTAGE);
             }
         }
