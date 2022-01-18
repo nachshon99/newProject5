@@ -184,7 +184,6 @@ public class Shop {
         }while (selectProduct != Main.END_PURCHASE);
 
         ((Client) user).setPurchases(((Client) user).getPurchases() + 1);
-        Calendar calendar = GregorianCalendar.getInstance();
         Date nowDate = Calendar.getInstance().getTime();
         ((Client) user).setLastPurchases(nowDate);
         priceToPay = cart.sumPrices(user);
