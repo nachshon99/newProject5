@@ -5,6 +5,7 @@ import java.util.Scanner;
 public class Shop {
     private User[]users;
     private Product[]products;
+
     public static final int EMPLOYEE_CHOOSE = 1;
     public static final int CLIENT_CHOOSE = 2;
     public static final int ADD_TO_LENGTH_ARRAY = 1;
@@ -18,7 +19,13 @@ public class Shop {
     public static final int MANAGEMENT_TEAM_DISCOUNT_PERCENTAGE = 30;
     public static final int MANAGER_DISCOUNT_PERCENTAGE = 20;
     public static final int REGULAR_DISCOUNT_PERCENTAGE = 10;
-
+    public static final int MAX_PERCENT = 100;
+    public static final int MIN_PERCENT = 1;
+    public static final int NOT_CORRECT_LENGTH = 0;
+    public static final int MINIMUM_PRICE = 0;
+    public static final int INITIALIZE_PURCHASE = 0;
+    public static final double INITIALIZE_COST = 0.0F;
+    public static final int MINIMUM_PRODUCTS = 0;
 
     public Shop(){
         this.users = new User[0];
@@ -33,7 +40,7 @@ public class Shop {
             System.out.println("Press 2: for Client");
             typeOfUser = scanner.nextInt();
             scanner.nextLine();
-        }while (typeOfUser < 1 || typeOfUser > 2);
+        }while (typeOfUser < EMPLOYEE_CHOOSE || typeOfUser > CLIENT_CHOOSE);
         switch (typeOfUser){
             case EMPLOYEE_CHOOSE:{
                 String firstName = getFirstNameFromUser();
@@ -163,7 +170,7 @@ public class Shop {
                 System.out.println("How many units from this product? ");
                 countOfThisProduct = scanner.nextInt();
                 scanner.nextLine();
-            }while (countOfThisProduct < 0);
+            }while (countOfThisProduct < MINIMUM_PRODUCTS);
             //פונקציה של קניה
             for (int i = 0; i < countOfThisProduct; i++) {
                 cart.setProducts(cart.addToCart(shop.getProducts()[selectProduct]));
@@ -276,7 +283,7 @@ public class Shop {
             if(checkUsername){
                 System.out.println("The username is busy!");
             }
-        }while (checkUsername || username.length() == 0);
+        }while (checkUsername || username.length() == NOT_CORRECT_LENGTH);
         return username;
     }
     private String getPasswordFromUser() {
@@ -301,7 +308,7 @@ public class Shop {
             System.out.println("Choose your rank");
             System.out.println("1 - Regular \n2 - Manager\n3 - Management team");
             choose = scanner.nextInt();
-        }while (choose < 1 || choose > 3);
+        }while (choose < INT_REGULAR_EMPLOYEE || choose > INT_MANAGEMENT_TEAM);
         switch (choose){
             case INT_REGULAR_EMPLOYEE:{
                 rank = REGULAR_EMPLOYEE;
@@ -343,15 +350,15 @@ public class Shop {
         do {
             System.out.println("Enter product name: ");
             productName = scanner.nextLine();
-        }while (productName.length() == 0);
+        }while (productName.length() == NOT_CORRECT_LENGTH);
         do {
             System.out.println("Enter price: ");
             price = scanner.nextDouble();
-        }while (price <= 0);
+        }while (price <= MINIMUM_PRICE);
         do {
             System.out.println("Enter club member discount percentage: ");
             discountPercent = scanner.nextInt();
-        }while (discountPercent <1 || discountPercent > 100);
+        }while (discountPercent < MIN_PERCENT || discountPercent > MAX_PERCENT);
         Product newProduct = new Product(productName,price,discountPercent,true);
         Product[] products= new Product[this.products.length +1];
         for (int i = 0; i < this.products.length; i++){
@@ -372,7 +379,7 @@ public class Shop {
     //לקוח
     public int printProductsInStuckAndReturnCountProductsIsExist(){
         int lengthProductsArray = 0;
-        if(products.length > 0) {
+        if(products.length > NOT_CORRECT_LENGTH) {
             for (int i = 0, j = 1; i < products.length; i++) {
                 if(products[i].isExist()){
                     System.out.println(j+":" +"(Press " + i + " to add to cart)\n" + products[i]);
@@ -415,7 +422,7 @@ public class Shop {
         for (int i = 0; i < this.users.length;i++){
             newArray[i] = this.users[i];
         }
-        User userToAdd = new Client(firstName,lastName,username,password, isClubMember,0,0.0,null);
+        User userToAdd = new Client(firstName,lastName,username,password, isClubMember,INITIALIZE_PURCHASE,INITIALIZE_COST,null);
         newArray[this.users.length] = userToAdd;
         this.users = newArray;
     }
@@ -425,7 +432,7 @@ public class Shop {
         for (int i = 0; i < this.users.length;i++){
             newArray[i] = this.users[i];
         }
-        User userToAdd = new Employee(firstName,lastName,username,password,false,0,0.0,null, rank);
+        User userToAdd = new Employee(firstName,lastName,username,password,false,INITIALIZE_PURCHASE,INITIALIZE_COST,null, rank);
         newArray[this.users.length] = userToAdd;
         this.users = newArray;
     }
