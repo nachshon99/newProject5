@@ -25,7 +25,7 @@ public class Main {
                 printMenu();
                 System.out.println("What do you want to do? ");
                 option = scanner.nextInt();
-            }while (option < 1 || option > 3);
+            }while (option < CREATE_ACCOUNT || option > EXIT );
             switch (option){
                 case CREATE_ACCOUNT:{
                     shop.createUser();
