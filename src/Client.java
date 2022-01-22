@@ -62,7 +62,7 @@ public class Client extends User{
         if(!this.isClubMember) {
             output += "!";
         }else {
-            output = output.substring(output.length()) + "(VIP)!";
+            output = output.substring(0,output.length()) + "(VIP)!";
         }
         return  output + "\n";
     }
